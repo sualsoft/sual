@@ -9,6 +9,7 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 2rem;
+  padding-top: 0;
 }
 
 @media screen and (max-width: 500px) {
@@ -228,6 +229,8 @@ textarea::placeholder {
 }
 
 .button-outline {
+  position: relative; /* Add this for positioning pseudo-element */
+  overflow: hidden; /* Add this to hide overflow */
   max-width: 20rem;
   width: 100%;
   padding: 1rem;
@@ -242,14 +245,34 @@ textarea::placeholder {
   color: #ffa585;
   cursor: pointer;
   outline: none;
-  border-radius: 15px; /* Add this line for rounded corners */
   transition: all 0.3s ease, border-image-source 0.3s ease;
 }
 
-.button-outline:hover {
-  color: #ffeda0;
-  border-image-source: linear-gradient(to left, #ffa585, #ffeda0);
+.button-outline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, #ffa585, #ffeda0);
+  z-index: 0;
+  transition: all 0.3s ease;
 }
+
+.button-outline:hover::before {
+  left: 0;
+}
+
+.button-outline:hover {
+  color: white; /* Change text color on hover if needed */
+}
+
+.button-outline span {
+  position: relative;
+  z-index: 1; /* Ensure text stays on top */
+}
+
 .btn-text {
   background: #ffa585;
   background: linear-gradient(to left, #ffeda0, #ffa585, #ffa585, #ffeda0);
@@ -261,7 +284,9 @@ textarea::placeholder {
 }
 .button-outline:hover .btn-text {
   background-position: 0 0;
+  -webkit-text-fill-color: black; /* Change text fill color to black on hover */
 }
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -415,6 +440,7 @@ textarea::placeholder {
 
 .get-started-btn:hover {
   background-position: -150% 0;
+  -webkit-text-fill-color: black;
 }
 
 @media (max-width: 992px) {
@@ -441,6 +467,13 @@ textarea::placeholder {
 .navbar {
   padding: 0;
   transition: all ease-in-out 0.5s;
+}
+.nav-bar-container {
+  position: fixed;
+  z-index: 99999;
+  width: calc(100% - 4rem);
+  padding-top: 2rem;
+  background-color: #030409;
 }
 
 .navbar ul {
